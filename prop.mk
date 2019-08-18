@@ -69,7 +69,7 @@ persist.debug.coresight.config=stm-events
 
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
-debug.egl.hw=0 \
+debug.egl.hw=1 \
 debug.enable.sglscale=1 \
 debug.gralloc.enable_fb_ubwc=1 \
 debug.mdpcomp.logs=0 \
@@ -91,6 +91,13 @@ sdm.debug.disable_skip_validate=1 \
 vendor.display.disable_skip_validate=1 \
 vendor.display.enable_default_color_mode=0 \
 vendor.gralloc.enable_fb_ubwc=1
+
+# Rendering
+PRODUCT_PROPERTY_OVERRIDES += \
+debug.sf.disable_hwc=0 \
+debug.sf.recomputecrop=0 \
+persist.hwc.ptor.enable=true \
+debug.sf.gpu_comp_tiling=1
 
 # DRM
 PRODUCT_PROPERTY_OVERRIDES += \
