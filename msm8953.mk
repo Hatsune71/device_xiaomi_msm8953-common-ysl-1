@@ -393,3 +393,7 @@ PRODUCT_BOOT_JARS += \
 #XiaomiParts
 PRODUCT_PACKAGES += \
     XiaomiParts
+
+#GCam Go
+PRODUCT_PACKAGES += \
+    GCam
