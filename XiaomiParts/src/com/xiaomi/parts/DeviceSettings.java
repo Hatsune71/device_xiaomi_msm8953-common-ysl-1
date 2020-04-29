@@ -29,6 +29,9 @@ public class DeviceSettings extends PreferenceFragment implements
 
     private static final String AMBIENT_DISPLAY = "ambient_display_gestures";
 
+    public static final String PREF_THERMAL = "thermal";
+    public static final String THERMAL_PATH = "/sys/devices/virtual/thermal/thermal_message/sconfig";
+
     private static final String PREF_ENABLE_DIRAC = "dirac_enabled";
     private static final String PREF_HEADSET = "dirac_headset_pref";
     private static final String PREF_PRESET = "dirac_preset_pref";
@@ -48,6 +51,8 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String PREF_USB_FASTCHARGE = "fastcharge";
     public static final String USB_FASTCHARGE_PATH = "/sys/kernel/fast_charge/force_fast_charge";
     private SecureSettingSwitchPreference mFastcharge;
+
+    private SecureSettingListPreference mTHERMAL;
 
     //public static final String PREF_TORCH_BRIGHTNESS = "torch_brightness";
     //private static final String TORCH_1_BRIGHTNESS_PATH = "/sys/devices/soc/800f000.qcom," +
@@ -120,6 +125,11 @@ public class DeviceSettings extends PreferenceFragment implements
             return true;
         });
 
+        mTHERMAL = (SecureSettingListPreference) findPreference(PREF_THERMAL);
+        mTHERMAL.setValue(FileUtils.getValue(THERMAL_PATH));
+        mTHERMAL.setSummary(mTHERMAL.getEntry());
+        mTHERMAL.setOnPreferenceChangeListener(this);
+
         Preference ambientDisplay = findPreference(AMBIENT_DISPLAY);
         ambientDisplay.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(getContext(), AmbientGesturePreferenceActivity.class);
@@ -140,6 +150,12 @@ public class DeviceSettings extends PreferenceFragment implements
             case PREF_VIBRATION_STRENGTH:
                 double vibrationValue = (int) value / 100.0 * (MAX_VIBRATION - MIN_VIBRATION) + MIN_VIBRATION;
                 FileUtils.setValue(VIBRATION_STRENGTH_PATH, vibrationValue);
+                break;
+
+            case PREF_THERMAL:
+                mTHERMAL.setValue((String) value);
+                mTHERMAL.setSummary(mTHERMAL.getEntry());
+                FileUtils.setValue(THERMAL_PATH, (String) value);
                 break;
 
                 break;
