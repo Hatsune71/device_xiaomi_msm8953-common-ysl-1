@@ -158,8 +158,6 @@ public class DeviceSettings extends PreferenceFragment implements
                 FileUtils.setValue(THERMAL_PATH, (String) value);
                 break;
 
-                break;
-
             case PREF_ENABLE_DIRAC:
                 try {
                     DiracService.sDiracUtils.setEnabled((boolean) value);
